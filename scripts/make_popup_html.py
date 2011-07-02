@@ -1,12 +1,7 @@
 import os.path
-from jinja2 import Template, Environment, FileSystemLoader
 import unicodedata
+from jinja2 import Template, Environment, FileSystemLoader
 
-
-
-#ENV = Environment( loader=FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
-#template = ENV.get_template(os.path.join('chrome_popup_template.html'))
-#template.render(all_symbols)
 
 MOST_USED_NAMES = ['WHITE STAR', 'BLACK STAR',
                    'CHECK MARK', 'HEAVY CHECK MARK',
@@ -45,8 +40,10 @@ MATH_OPERATORS_RANGE = (0x2200, 0x22FF)
 SHAPES_RANGE = (0x25A0, 0x25FF)
 GREEK_LETTERS_RANGE = (0x0370, 0x03FF)
 
+COMBOS = [('LOOK OF DISAPPROVAL', (0x0CA0, 0x5F, 0x0CA0))]
 
-outfile = "../unicode-symbols/popup.html"
+
+
 
 
 def make_symbols_from_range(unicode_range):
@@ -80,7 +77,8 @@ def make_html_entity_strings_from_combos(combos):
     return out
 
 
-if __name__=="__main__":
+
+def main(outfile):
     most_used_symbols = make_symbols_from_names(MOST_USED_NAMES)
     dingbats_symbols = make_symbols_from_range(DINGBATS_RANGE)
     misc_symbols = make_symbols_from_range(MISC_SYMBOLS_RANGE)
@@ -98,7 +96,7 @@ if __name__=="__main__":
             ('shapes', shape_symbols),
     ]
 
-    combos = [('LOOK OF DISAPPROVAL', (0x0CA0, 0x5F, 0x0CA0))]
+
     
 
     ENV = Environment( loader=FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
@@ -106,7 +104,16 @@ if __name__=="__main__":
     
     chrome_popup_html = template.render(all_symbols=all_symbols,
                                         most_used=most_used_symbols,
-                                        combos=make_html_entity_strings_from_combos(combos))
+                                        combos=make_html_entity_strings_from_combos(COMBOS))
 
     with open(outfile, 'w') as f:
         f.write(chrome_popup_html)
+
+
+if __name__=="__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description='create the popup.html file for the chrome extension')
+    parser.add_argument('--outfile', dest='outfile', type=str, required=True, help='path to output file')
+
+    args = parser.parse_args()
+    main(args.outfile)
