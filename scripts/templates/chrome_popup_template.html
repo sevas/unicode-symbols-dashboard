@@ -18,18 +18,19 @@
             $('#tabs').tabs();
             $("#clear_text").click(function() {$(".textbox").val(""); });
             $(".icons .unicode-symbol").click(reply_click);
-
+            $(".icons .unicode-symbol-combo").click(reply_click);
 
             $('ul.icons li').hover(
 					function() { $(this).addClass('ui-state-hover'); },
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 
-            if ($.client.os != "Mac"){
-                $('label').text("Select and hit &#x2318;-C to copy")
+            
+            if ($.client.os == "Mac"){
+                $('label').html("Select all and hit &#x2318;-C to copy")
             }
             else {
-               $('label').text("Select and hit CTRL-C to copy")
+               $('label').html("Select all and hit CTRL-C to copy")
             }
 
         }
@@ -45,12 +46,17 @@
 
 
         <style type="text/css">
-            body {background-image: url(images/concrete_wall_3.png);}
-			
+            body
+            {
+                background-image: url(images/concrete_wall_3.png);
+                font-family: "Gill Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+            }
+
 
 			ul.icons {margin: 0; padding: 0;}
 			ul.icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
 			ul.icons span.unicode-symbol {float: left; margin: 0 2px; width: 32px; height: 32px; text-align: center; font-size: x-large;}
+            ul.icons span.unicode-symbol-combo {float: left; margin: 0 2px; height: 32px; text-align: center; font-size: x-large;}
 		</style>	
 
 </head>
@@ -59,15 +65,40 @@
 <body>
 <div class="span-16" style="padding-left: 15px; padding-top: 15px;">
     <div style="text-align: center;">
-        <h1>Unicode Symbols</h1>
+        <h1 style="color: #666; font-weight: bold;">Unicode Symbols</h1>
     </div>
     
         <div id="tabs" class="span-16">
             <ul>
+                <li><a href="#tabs-most-used">Most used </a></li>
+
                 {% for name, symbols in all_symbols %}
                     <li><a href="#tabs-{{ name }}"> {{ name|replace("-", " ")|capitalize }} </a></li>
                 {% endfor %}
             </ul>
+
+            <div id="tabs-most-used" style="height: 350px; overflow-y: auto;">
+                <ul class="icons ui-widget ui-helper-clearfix">
+                    {% for title, decimal_value in most_used %}
+                    <li class="ui-state-default ui-corner-all" title="{{ title  }}">
+                        <span class="unicode-symbol">&#{{decimal_value}};</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <br/>
+                <br/>
+
+                <ul class="icons ui-widget ui-helper-clearfix">
+                    {% for title, html_string in combos %}
+                        <li class="ui-state-default ui-corner-all" title="{{ title  }}">
+                            <span class="unicode-symbol-combo">{{ html_string }}</span>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+            </div>
+
 
             {% for name, symbols in all_symbols %}
                 <div id="tabs-{{ name }}" style="height: 350px; overflow-y: auto;">

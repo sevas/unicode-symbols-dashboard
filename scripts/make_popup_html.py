@@ -72,6 +72,13 @@ def make_symbols_from_names(unicode_names):
     return symbols
 
 
+def make_html_entity_strings_from_combos(combos):
+    out = list()
+    for name, values in combos:
+        html_string = ''.join(['&#{0};'.format(v) for v in values])
+        out.append((name, html_string))
+    return out
+
 
 if __name__=="__main__":
     most_used_symbols = make_symbols_from_names(MOST_USED_NAMES)
@@ -82,14 +89,13 @@ if __name__=="__main__":
     shape_symbols = make_symbols_from_range(SHAPES_RANGE)
     greek_symbols = make_symbols_from_range(GREEK_LETTERS_RANGE)
 
+
     all_symbols = [
-            ('most-used', most_used_symbols),
             ('dingbats', dingbats_symbols),
             ('misc-symbols', misc_symbols),
             ('arrows', arrow_symbols),
             ('math-operators', math_symbols),
             ('shapes', shape_symbols),
-            #('greek-letters', greek_symbols),
     ]
 
     combos = [('LOOK OF DISAPPROVAL', (0x0CA0, 0x5F, 0x0CA0))]
@@ -98,7 +104,9 @@ if __name__=="__main__":
     ENV = Environment( loader=FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
     template = ENV.get_template(os.path.join('chrome_popup_template.html'))
     
-    chrome_popup_html = template.render(all_symbols=all_symbols)
+    chrome_popup_html = template.render(all_symbols=all_symbols,
+                                        most_used=most_used_symbols,
+                                        combos=make_html_entity_strings_from_combos(combos))
 
     with open(outfile, 'w') as f:
         f.write(chrome_popup_html)
