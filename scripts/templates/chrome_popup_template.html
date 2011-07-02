@@ -15,17 +15,19 @@
         $(document).ready(main);
 
         function main(){
+            // jQuery UI magic
             $('#tabs').tabs();
             $("#clear_text").click(function() {$(".textbox").val(""); });
-            $(".icons .unicode-symbol").click(reply_click);
-            $(".icons .unicode-symbol-combo").click(reply_click);
-
             $('ul.icons li').hover(
 					function() { $(this).addClass('ui-state-hover'); },
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 
-            
+            // register handler to every 'button'
+            $(".icons .unicode-symbol").click(reply_click);
+            $(".icons .unicode-symbol-combo").click(reply_click);
+
+            // platform-dependent copy instructions
             if ($.client.os == "Mac"){
                 $('label').html("Select all and hit &#x2318;-C to copy")
             }
@@ -35,9 +37,9 @@
 
         }
 
+        // callback func
         function reply_click(icon_button){
             current_val =  $(".textbox").val();
-
             $('.textbox').val(current_val + this.innerHTML);
         }
 
