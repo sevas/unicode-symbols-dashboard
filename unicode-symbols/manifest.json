@@ -4,10 +4,12 @@
   "description": "A dashboard to quickly insert unicode symbols",
   "browser_action": {
     "default_title": "Unicode Symbols",
-    "default_icon": "circled_white_star.png",
+    "default_icon": "icon48.png",
     "popup": "popup.html"
   },
-  "permissions": [
-
-  ]
+  "icons": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+  }
 }
