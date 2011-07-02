@@ -15,7 +15,7 @@ Down with ASCII, the Internet needs more little stars and funny shapes.
 Usage
 -----
 
-You should probably install the Google Chrome extension using the ``.crx`` file.
+You should probably install this extension from the `Google Chrome Web Store <https://chrome.google.com/webstore/detail/cccgobglgjiochaaghighegcgpcdkfhj>`_.
 
 However, if you wish to rebuild the extension, run the ``make_all.sh`` shell script (from the ``scripts`` directory.)
 Then you'll need to load the directory as an unpacked extension in Google Chrome.
