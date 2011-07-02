@@ -1,0 +1,13 @@
+{
+  "name": "Unicode Symbols",
+  "version": "1.0",
+  "description": "A dashboard to quickly insert unicode symbols",
+  "browser_action": {
+    "default_title": "Unicode Symbols",
+    "default_icon": "circled_white_star.png",
+    "popup": "popup.html"
+  },
+  "permissions": [
+
+  ]
+}
