@@ -5,13 +5,10 @@
     <link type="text/css" rel="stylesheet" href="css/blueprint/screen.css"  media="screen, projection"/>
     <link type="text/css" rel="stylesheet" href="css/blueprint/plugins/buttons/screen.css" media="screen, projection"/>
 
-
     <link type="text/css" href="css/smoothness/jquery-ui-1.8.14.custom.css" rel="stylesheet" />
-
     <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
-    
-    
+    <script type="text/javascript" src="js/jquery.client.js"></script>
 
     <script type="text/javascript">
 
@@ -28,12 +25,19 @@
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 
+            if ($.client.os != "Mac"){
+                $('label').text("Select and hit &#x2318;-C to copy")
+            }
+            else {
+               $('label').text("Select and hit CTRL-C to copy")
+            }
+
         }
 
         function reply_click(icon_button){
             current_val =  $(".textbox").val();
 
-            $(".textbox").val(current_val + this.innerHTML);
+            $('.textbox').val(current_val + this.innerHTML);
         }
 
     </script>
@@ -41,33 +45,32 @@
 
 
         <style type="text/css">
-            body {background-image: url(images/brushed_alu.png);}
-			/*demo page css*/
+            body {background-image: url(images/concrete_wall_3.png);}
+			
 
 			ul.icons {margin: 0; padding: 0;}
 			ul.icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
-			ul.icons span.unicode-symbol {float: left; margin: 0 2px; width: 24px; height: 24px; text-align: center; font-size: larger;}
+			ul.icons span.unicode-symbol {float: left; margin: 0 2px; width: 32px; height: 32px; text-align: center; font-size: x-large;}
 		</style>	
 
 </head>
 
 
 <body>
-<div class="span-16" style="padding-left: 15px; padding-top: 15px; text-align: center;">
+<div class="span-16" style="padding-left: 15px; padding-top: 15px;">
     <div style="text-align: center;">
         <h1>Unicode Symbols</h1>
     </div>
     
-        <div id="tabs" class="span-15">
+        <div id="tabs" class="span-16">
             <ul>
-
                 {% for name, symbols in all_symbols %}
-                    <li><a href="#tabs-{{ name }}"> {{ name|capitalize }} </a></li>
+                    <li><a href="#tabs-{{ name }}"> {{ name|replace("-", " ")|capitalize }} </a></li>
                 {% endfor %}
             </ul>
 
             {% for name, symbols in all_symbols %}
-                <div id="tabs-{{ name }}">
+                <div id="tabs-{{ name }}" style="height: 350px; overflow-y: auto;">
                     <ul class="icons ui-widget ui-helper-clearfix">
                         {% for title, decimal_value in symbols %}
                         <li class="ui-state-default ui-corner-all" title="{{ title  }}">
@@ -83,10 +86,10 @@
         </div>
 
         <br/>
-
-        <div class="span-10">
-            <input name="to_copy_box" type="text" class="textbox" style="font-size: large;width: 100%;  "/>
-            <button id="clear_text" type="button" >Clear</button>
+        <div style="width: 100%; text-align: center; ">
+            <input name="to_copy_box" type="text" class="textbox" style="font-size: x-large; width: 100%; height: 36px; "/>
+            <br/>
+            <label class="quiet" style="font-size: large;width: 100%; "></label>
         </div>
 
 </div>
