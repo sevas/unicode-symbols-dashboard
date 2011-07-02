@@ -101,12 +101,14 @@ def main(outfile):
 
     ENV = Environment( loader=FileSystemLoader(os.path.join(os.path.dirname(__file__),'templates')))
     template = ENV.get_template(os.path.join('chrome_popup_template.html'))
-    
+
+    print('Generating chrome extension')
     chrome_popup_html = template.render(all_symbols=all_symbols,
                                         most_used=most_used_symbols,
                                         combos=make_html_entity_strings_from_combos(COMBOS))
 
     with open(outfile, 'w') as f:
+        print('Saving generated html to {0}'.format(outfile))
         f.write(chrome_popup_html)
 
 
